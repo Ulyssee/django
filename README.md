@@ -7,4 +7,4 @@
 -At last, open up your favorite web browser
 -Go to URL “http://127.0.0.1/[ PORT_NUMBER ]/“
 -For the Admin Panel credentials, you have to create one with a superuser.
-i 
+ 
