@@ -1,0 +1,24 @@
+
+{% block content %}
+  <h2>Détails du groupe de lecture</h2>
+  <p>Nom : {{ groupe_lecture.nom }}</p>
+  <p>Description : {{ groupe_lecture.description }}</p>
+  <h3>Membres</h3>
+  <ul>
+    {% for membre in groupe_lecture.membres.all %}
+      <li>{{ membre.username }}</li>
+    {% endfor %}
+  </ul>
+  {% if user.is_authenticated %}
+    {% if user not in groupe_lecture.membres.all %}
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit">Rejoindre le groupe</button>
+      </form>
+    {% else %}
+      <p>Vous avez déjà rejoint ce groupe.</p>
+    {% endif %}
+  {% else %}
+    <p>Veuillez vous connecter pour rejoindre un groupe de lecture.</p>
+  {% endif %}
+{% endblock %}

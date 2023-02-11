@@ -1,11 +1,14 @@
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title></title>
 
-    <style media="screen">
-    table.redTable {
+
+<style media="screen">
+table.redTable {
 border: 2px solid #A40808;
 background-color: #EEE7DB;
 width: 100%;
@@ -55,52 +58,47 @@ color: #A40808;
 padding: 2px 8px;
 border-radius: 5px;
 }
-    </style>
+</style>
+
   </head>
   <body>
-    {% include "library/navbaradmin.html" %}
-    <br>
-    <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Registered Students</h3>
+  {% include "library/navbarstudent.html" %}<br><br>
+  <h3 class="p-3 mb-2 bg-danger text-white" style = 'font-size: 50px;text-align:center;'>Groupe de Lecture assigné à vous</h3>
 
-    {% if students%}
-<div class="container">
-  <table class="table table-hover table-condensed table-striped table-bordered">
-    <thead>
-    <tr>
-    <th>Nom</th>
-    <th>Catégorie</th>
-    <th>Genre</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-    <td colspan="3">
-    <div class="links"></div>
-    </td>
-    </tr>
-    </tfoot>
-    <tbody>
-      {% for s in students %}
+<div class="row">
+
+  <div class="col-lg-6" style="padding-right:0px;">
+    <table class="table table-hover table-condensed table-striped table-bordered">
+  <thead>
+  <tr>
+  <th>Nom du groupe de lecture</th>
+  <th>Jour de la présetation</th>
+  </thead>
+  <tfoot>
+  <tr>
+  <td colspan="5">
+  <div class="links"></div>
+  </td>
+  </tr>
+  </tfoot>
+  <tbody>
+        {% for groupe in groupes %}
         <tr>
-          <td>{{s.get_name}}</td>
-          <td>{{s.enrollment}}</td>
-          <td>{{s.branch}}</td>
-    
+            <td>{{ groupe.name }}</td>
+            <td>{{ groupe.date }}</td>
         </tr>
-    
-      {% endfor %}
-    </tbody>
-    </table>
-</div>
-{%else%}
-<h1> Aucun étudiant enregistré dans à la bibliothèque</h1>
-{%endif%}
+        {% endfor %}
+  </tbody>
+  </table>
+
+</div></div>
+
+
+
 
 
 
 <br><br><br><br><br><br>
-
 <br><br><br>
   {% include "library/footer.html" %}
   </body>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from . import forms,models
 from django.http import HttpResponseRedirect
@@ -8,7 +8,11 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.core.mail import send_mail
 from librarymanagement.settings import EMAIL_HOST_USER
-
+from django.views.generic import ListView,DetailView
+from .models import GroupeLecture, StudentExtra
+from .forms import GroupeLectureForm, AddStudentForm
+from library.models import GroupeLecture
+from django.views import generic
 
 def home_view(request):
     if request.user.is_authenticated:
@@ -166,22 +170,24 @@ def viewissuedbookbystudent(request):
 
     li2=[]
     for ib in issuedbook:
-        books=models.Book.objects.filter(isbn=ib.isbn)
-        for book in books:
-            t=(request.user,student[0].enrollment,student[0].branch,book.name,book.author)
-            li1.append(t)
-        issdate=str(ib.issuedate.day)+'-'+str(ib.issuedate.month)+'-'+str(ib.issuedate.year)
-        expdate=str(ib.expirydate.day)+'-'+str(ib.expirydate.month)+'-'+str(ib.expirydate.year)
-        #fine calculation
-        days=(date.today()-ib.issuedate)
-        print(date.today())
-        d=days.days
-        fine=0
-        if d>15:
-            day=d-15
-            fine=day*10
-        t=(issdate,expdate,fine)
-        li2.append(t)
+        if ib.isbn:
+            books=models.Book.objects.filter(isbn=ib.isbn)
+            for book in books:
+                t=(request.user,student[0].enrollment,student[0].branch,book.name,book.author)
+                li1.append(t)
+            issdate=str(ib.issuedate.day)+'-'+str(ib.issuedate.month)+'-'+str(ib.issuedate.year)
+            expdate=str(ib.expirydate.day)+'-'+str(ib.expirydate.month)+'-'+str(ib.expirydate.year)
+            #fine calculation
+            days=(date.today()-ib.issuedate)
+            print(date.today())
+            d=days.days
+            fine=0
+            if d>15:
+                day=d-15
+                fine=day*10
+            t=(issdate,expdate,fine)
+            li2.append(t)
+
 
     return render(request,'library/viewissuedbookbystudent.html',{'li1':li1,'li2':li2})
 
@@ -199,3 +205,64 @@ def contactus_view(request):
             send_mail(str(name)+' || '+str(email),message, EMAIL_HOST_USER, ['wapka1503@gmail.com'], fail_silently = False)
             return render(request, 'library/contactussuccess.html')
     return render(request, 'library/contactus.html', {'form':sub})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def create_groupe_view(request):
+    if request.method == 'POST':
+        form = GroupeLectureForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            return redirect(groupes_lecture_view)
+    else:
+        form = GroupeLectureForm()
+    return render(request, 'library/create_groupe_lecture.html', {'form': form})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def groupes_lecture_view(request):
+    groupes = models.GroupeLecture.objects.all()
+    return render(request, 'library/groupes_lecture_list.html', {'groupes': groupes})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def detail_groupes_view(request, pk):
+    groupe = models.GroupeLecture.objects.get(pk=pk)
+    return render(request, 'library/detail_groupe.html', {'groupe': groupe})
+    
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def delete_groupe_view(request, pk):
+    try:
+        groupe = models.GroupeLecture.objects.get(pk=pk)
+    except models.GroupeLecture.DoesNotExist:
+        messages.error(request, 'Groupe de lecture introuvable.')
+        return redirect(groupes_lecture_view)
+
+    groupe.delete()
+    return redirect(groupes_lecture_view)
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def ajouter_etudiant(request, groupe_id):
+    # Récupérer le groupe de lecture correspondant à l'ID fourni
+    groupe = get_object_or_404(GroupeLecture, id=groupe_id)
+
+    if request.method=='POST':
+        #now this form have data from html
+        form=forms.AddStudentForm(request.POST)
+        if form.is_valid():
+            obj=models.IssuedBook()
+            obj.enrollment=request.POST.get('enrollment3')
+            obj.save()
+            return redirect(groupes_lecture_view)
+    else:
+        form = AddStudentForm()
+    return render(request,'library/add_student_to_group.html',{'form':form})
+
+@login_required(login_url='studentlogin')
+def viewgrouplist_view(request):
+    student=models.StudentExtra.objects.filter(user_id=request.user.id)
+    groupes=models.GroupeLecture.objects.all()
+    return render(request,'library/viewgrouplist.html',{'groupes':groupes})

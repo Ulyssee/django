@@ -50,3 +50,12 @@ class IssuedBook(models.Model):
     expirydate=models.DateField(default=get_expiry)
     def __str__(self):
         return self.enrollment
+
+class GroupeLecture(models.Model):
+    name=models.CharField(max_length=100)
+    description=models.TextField(max_length=200)
+    membres = models.ManyToManyField(StudentExtra)
+    date=models.DateField(default=datetime.today)
+    proprietaire=models.ForeignKey(User,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name

@@ -60,20 +60,20 @@
     {% include "library/navbaradmin.html" %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;margin-bottom:0px;'>Issued books to Student</h3>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;margin-bottom:0px;'>Assigné un livre à un étudiant</h3>
 
 {% if li%}
     <div class="container">
       <table class="table table-hover table-condensed table-striped table-bordered">
         <thead>
         <tr>
-        <th>Student Name</th>
-        <th>Enrollment</th>
-        <th>Book Name</th>
-        <th>Author</th>
-        <th>Issued</th>
-        <th>Expiry Date</th>
-        <th>Fine</th>
+        <th>Nom de l'étudiant</th>
+        <th>Catégorie</th>
+        <th>Nom du Livre</th>
+        <th>Auteur</th>
+        <th>Emprunté</th>
+        <th>Date d'expiratin</th>
+        <th>Rendu </th>
         </tr>
         </thead>
         <tfoot>
@@ -99,7 +99,7 @@
         </table>
     </div>
     {%else%}
-    <h1> 0 book Issued</h1>
+    <h1> 0 livre Emprunté</h1>
     {%endif%}
 
     <br><br><br><br><br><br><br><br><br>

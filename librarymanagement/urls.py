@@ -19,7 +19,7 @@ from django.urls import path
 from library import views
 from django.contrib.auth.views import LoginView,LogoutView
 
-
+appname='library'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -47,5 +47,11 @@ urlpatterns = [
 
     path('aboutus', views.aboutus_view),
     path('contactus', views.contactus_view),
+
+    path('groupes_lecture/', views.groupes_lecture_view),
+    path('groupes_lecture/create', views.create_groupe_view),
+    path('groupes_lecture/<int:groupe_id>/ajouter_etudiant/', views.ajouter_etudiant, name='ajouter_etudiant'),
+
+    path('viewgrouplist', views.viewgrouplist_view),
 
 ]
