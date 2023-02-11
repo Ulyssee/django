@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -58,41 +59,13 @@ border-radius: 5px;
     {% include "library/navbaradmin.html" %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Livre disponible dans la bibliotheque</h3>
-{% if books%}
-<div class="container">
-  <table class="table table-hover table-condensed table-striped table-bordered">
-    <thead>
-    <tr>
-    <th>Nom du livre</th>
-    <th>ISBN</th>
-    <th>Auteur</th>
-    <th>Category</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-    <td colspan="4" rowspan="4">
-    <div class="links"></div>
-    </td>
-    </tr>
-    </tfoot>
-    <tbody>
-      {% for book in books %}
-        <tr>
-          <td>{{book.name}}</td>
-          <td>{{book.isbn}}</td>
-          <td>{{book.author}}</td>
-          <td>{{book.category}}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-    </table>
-</div>
-{%else%}
-<h1>Il y 0 livre</h1>
-{%endif%}
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Modifier un groupe de lecture</h3>
 
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Enregistrer</button>
+    </form>
 
 <br><br><br><br><br><br><br><br><br>
     {% include "library/footer.html" %}

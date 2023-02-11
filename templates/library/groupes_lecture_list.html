@@ -61,16 +61,18 @@ border-radius: 5px;
     {% include "library/navbaradmin.html" %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Registered Students</h3>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Groupes de lecture</h3>
+    <br>
+    <a href="create">Créer un groupe de lecture</a>
 
-    {% if students%}
-<div class="container">
+    {% if groupes %}
+    <div class="container">
   <table class="table table-hover table-condensed table-striped table-bordered">
     <thead>
     <tr>
     <th>Nom</th>
-    <th>Catégorie</th>
-    <th>Genre</th>
+    <th>Description</th>
+    <th>Date</th>
     </tr>
     </thead>
     <tfoot>
@@ -80,22 +82,24 @@ border-radius: 5px;
     </td>
     </tr>
     </tfoot>
-    <tbody>
-      {% for s in students %}
-        <tr>
-          <td>{{s.get_name}}</td>
-          <td>{{s.enrollment}}</td>
-          <td>{{s.branch}}</td>
     
-        </tr>
-    
+<tbody>
+  {% for groupe in groupes %}
+    <tr>
+      <td>{{groupe.name}}</td>
+      <td>{{groupe.description}}</td>
+      <td>{{groupe.date}}</td>
+      <td><a href="{% url 'ajouter_etudiant' groupe.id %}" class="btn btn-primary">Ajouter participant</a></td>
+    </tr>
+
+
       {% endfor %}
     </tbody>
     </table>
 </div>
-{%else%}
-<h1> Aucun étudiant enregistré dans à la bibliothèque</h1>
-{%endif%}
+{% else %}
+  <p>Aucun groupe de lecture n'est disponible.</p>
+{% endif %}
 
 
 
