@@ -26,3 +26,4 @@ Le but de ce projet est de créer un site de location/pret de livres avec comme 
 - chat/forum
 Le site doit être fait avec du Django simple (pas d'API REST, pas de front avec framework type react ou
 angular), ignorer cette contrainte conduira à un zero automatiquement.
+
