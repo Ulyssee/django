@@ -1,12 +1,12 @@
 # django
 
-#-Install the Requirements: pip install -r requirements.txt.
-#-Then, make database migrations: python3 manage.py makemigrations
-#-python3 manage.py migrate
-#-And finally, after a successful migration run the application: python3 manage.py runserver
-#-At last, open up your favorite web browser
-#-Go to URL “http://127.0.0.1/[ PORT_NUMBER ]/“
-#-For the Admin Panel credentials, you have to create one with a superuser. 
+- Install the Requirements: pip install -r requirements.txt.
+- Then, make database migrations: python3 manage.py makemigrations
+- python3 manage.py migrate
+- And finally, after a successful migration run the application: python3 manage.py runserver
+- At last, open up your favorite web browser
+- Go to URL “http://127.0.0.1/[ PORT_NUMBER ]/“
+- For the Admin Panel credentials, you have to create one with a superuser. 
 
 Le but de ce projet est de créer un site de location/pret de livres avec comme features :
 - authentification, pour deux types de profils : libraire et client --OK--
