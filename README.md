@@ -18,7 +18,7 @@ Le but de ce projet est de créer un site de location/pret de livres avec comme 
 - backoffice pour les bibliothèques :
 - - ajout de livres --OK--
 - - interface de gestion des emprunts --OK--
-- - listing des retards de retour de livres 
+- - listing des retards de retour de livres --OK--
 - - creation de groupes de lectures --OK--
 - page d'accueil des patients :
 - - rappel des prochains groupes de lectures --OK--
